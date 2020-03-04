@@ -1,0 +1,90 @@
+
+<!document html>
+<head>
+	<style type="text/css">
+		*{
+
+			margin: 0;
+			padding: 0;
+		}
+		.main{
+           border: 1px solid red;
+           width: 200px;
+           height: 200px;
+
+		}
+		#ul{
+
+			margin-left: 50px;
+		}
+	</style>
+<body>
+	<div class="main">
+		<input type="button" id="btn" value="点击" />
+  <ul id="ul">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+	</div>
+
+<script type="text/javascript">
+	
+window.onload=()=>{
+
+    let ulele=document.querySelector("#ul");
+   let  btnele=document.querySelector("#btn")
+   var l=1;
+
+     let iNow = 4;
+    ulele.onmouseover=ev =>{
+       ev=ev ||window.evet;
+       let target=ev.target||ev.srcElement;
+       if(target.nodeName.toLowerCase()==='li'){
+       	target.style.background='red'
+
+       }
+
+    },
+    ulele.onmouseout=ev=>{
+              ev=ev||window.evet;
+              let target=ev.target||ev.srcElement;
+              if(target.nodeName.toLowerCase()==='li'){
+              	target.style.background=""
+              }
+    	
+    },
+     btnele.onclick=()=>{
+     	iNow++;
+     
+     	let li=document.createElement("li")
+     	li.innerHTML=iNow;
+     	ulele.appendChild(li)
+
+
+     }
+            var parent = {
+			  foo() {
+			    console.log("Hello from the Parent");
+			  }
+			}
+			 
+			var child = {
+			  foo() {
+			    super.foo();
+			    console.log("Hello from the Child");
+			  }
+			}
+			 
+			Object.setPrototypeOf(child, parent);
+			child.foo(); // Hello from the Parent
+			             // Hello from the Child
+      
+
+
+}
+
+</script>
+</body>
+</head>
+</html>

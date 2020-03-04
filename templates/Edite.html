@@ -1,0 +1,227 @@
+{% extends 'public/base.html' %}
+{% block title %} 任务编辑 {% endblock %}
+{% block style %}
+
+{% endblock %}
+
+{# 主体内容#}
+{% block content %}
+    <div class="content-wrapper" ng-controller="myCtrl" >
+        {% verbatim %}
+        <!-- Main content -->
+        <section  class="content">
+            <!-- Small boxes (Stat box) -->
+            <!-- 容器 DOM -->
+            <div class="row" >
+                <div class="col-md-12">
+                    <div class="search-form">
+                        <form role="form" id="searchForm" method="post">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th width="10%">查询状态：</th>
+                                    <td width="20%">
+                                      <select class="form-control"  ng-model="query">
+                                                   <option value="" >-请选择-</option>
+                                                   <option value="2" >全部</option>
+                                                   <option value="1" >开启</option>
+                                                   <option value="3">暂停</option>
+                                               </select>
+
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-flat" ng-click="querystate()">
+                                            查询
+                                        </button>
+                                        <a class="btn btn-primary btn-flat" ng-click="show('Add',0)">添加</a>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                  <div class="noData" ng-if="!isShow">
+                        暂无记录
+                    </div>
+                    <div class="box" ng-if="isShow" style="background:white" ng-cloak>
+                        <table id="tab_data" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+
+                                <th style="width:4%">序号</th>
+                                <th style="width:8%">任务</th>
+                                <th style="width:8%">时间</th>
+                                <th style="width:11%">音乐</th>
+                                <th style="width:8%">状态</th>
+                                <th style="width:8%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="width: 20px" ng-repeat="item in musers | orderBy : 'sort_num' " on-finish-render="ngRepeatFinished">
+                                <td  align="center" ng-bind="$index+1">
+                                <td id="name">
+                                    <div   align="center">{{ item.name }}</div>
+                                </td>
+                                <td >
+                                    <div   align="center">{{ item.time }}</div>
+                                </td>
+                                <td>
+                                    <div   align="center">{{ item.mp3 }}</div>
+                                </td>
+
+                                  <td align="center">
+
+                                      <input  type="checkbox" class="make-switch" id="{{ item.id }}" ng-checked="item.state" data-on-color="info" data-off-color="success">
+                                </td>
+                                <td>
+                                    <div align="center" >
+                                        <button type="button" class="btn bg-blue btn-flat btn-xs" ng-click="show('Edite',item.id,this)">
+                                            编辑
+                                        </button>
+                                              <button type="button"  class="btn bg-red btn-flat btn-xs" ng-click="showDelete(item.id,item.name)">
+                                            删除
+                                        </button>
+
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+        <!-- 模态框新增和编辑（Modal） -->
+        <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title" id="editTitle">
+                        </h4>
+                    </div>
+                    <div class="modal-body" id="editNum">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="form1" class="form-horizontal form" role="form" method="post">
+                                    <table class="table table-bordered table_sxcondition">
+                                        <tbody>
+                                         <tr>
+                                            <th width="20%">任务名：</th>
+                                            <td width="80%">
+                                                <input type="text" class="form-control" ng-model="name">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">任务时间：</th>
+                                            <td width="80%">
+                                                <input type='text' id="tasktime" class="form-control timepicker timepicker-default" ng-model="time" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">音乐：</th>
+                                            <td width="80%">
+                                                <select  data-edit-select="1"  onmousedown="if(this.options.length>3){this.size=8}" onblur="this.size=0" onchange="this.size=0"  style="position:absolute;z-index:1;"
+                                                         class="form-con" ng-options="mp3.mp3 for mp3 in mp3s" ng-model="mp3" >
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="s_show">
+                                            <th width="20%">状态：</th>
+                                            <td width="80%">
+                                               <select class="form-control"  ng-model="state">
+                                                   <option value="2">开启</option>
+                                                   <option value="1">暂停</option>
+
+                                               </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="save(flog)">
+                            保存
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- 模态框删除（Modal） -->
+        <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" style="width: 20%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <div class="modal-title">
+                            是否删除
+                        </div>
+                    </div>
+                      <div class="modal-body" id="del_div" style=" text-align:center;display: block">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="delete()">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div class="modal fade" id="uploadModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <div class="modal-title">
+                            上传音乐
+                        </div>
+                    </div>
+                    <div class="modal-body" v-model="deleteId" style="display: block">
+
+                         <input type="file" id="uploadfile">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="savefile()">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        {% endverbatim %}
+
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="../static/js/edite.js"></script>
+{% endblock %}

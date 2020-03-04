@@ -1,0 +1,30 @@
+<!document html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>闭包实现</title>
+</head>
+<body>
+<div>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</ul>
+</div>
+</body>
+<script type="text/javascript">
+	
+	var liEle=document.getElementsByTagName('li');
+	var lilen=liEle.length
+	for(let i=0;i<lilen;i++){
+		liEle[i].onclick=function(){
+			// 
+			alert(i)
+		}
+	}
+
+</script>
+</html>

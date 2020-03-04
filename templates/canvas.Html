@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+
+</style>
+<body>
+<canvas id="canvas_1">
+	我是一个画布
+</canvas>
+</body>
+<script type="text/javascript">
+	var canele=document.getElementById('canvas_1');
+	console.log(canele)
+	canele.width="500";
+	canele.height="500";
+	var ctx=canele.getContext('2d')
+	console.log(ctx)
+	//开始绘制
+	// ctx.beginPath()
+ //    //起点
+ //    ctx.moveTo(0,0)
+ //    //最后一个点
+ //    ctx.lineTo(450,300)
+ //    //绘制线条的路径
+ //    ctx.lineTo(0,450)
+ //     ctx.lineTo(0,0)
+ //   ctx.strokeStyle='red'
+ //      ctx.lineJoin="round"
+ //    ctx.stroke()
+ //  // 设置填充样式
+ //    ctx.fillStyle = "green";
+ 
+ //    // 填充当前视图
+ //    ctx.fill();
+// 设置线条宽度
+   ctx.fillStyle = '#00f';
+    ctx.font = 'italic 50px 隶书';
+    ctx.textBaseline = 'top';
+ 
+    //填充字符串
+    ctx.fillText('汪先生真是帅',0,0);
+    ctx.strokeStyle = 'f0f';
+    ctx.font = 'bold 45px 宋体';
+ 
+    // 绘制字符串的边框
+    ctx.strokeText('汪先生我爱你',0,50,200)
+
+   
+   
+    // ctx.fill()
+    //结束绘制
+    ctx.closePath()
+
+</script>
+</html>

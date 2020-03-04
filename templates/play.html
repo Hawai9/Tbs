@@ -1,0 +1,59 @@
+{% extends 'public/base.html' %}
+{% block title %} 播放页面 {% endblock %}
+{% block style %}
+    <style>
+        .startcolor{
+            background-color: #999999;
+        }
+
+    </style>
+
+{% endblock %}
+
+{# 主体内容#}
+{% block content %}
+
+    <div class="content-wrapper" ng-controller="myCtrl">
+        {% verbatim %}
+        <!-- Main content -->
+
+        <!-- Small boxes (Stat box) -->
+        <!-- 容器 DOM -->
+            <div  class="play_mian">
+            <div class="play_img" ></div>
+            <div class="play_open_close">
+                    <img id="startBtn" src="../static/img/start.png" width="40%"  ng-click="start_task()" >
+                    <img id="stopBtn" src="../static/img/stop.png" width="20%" ng-click="stop_task()">
+                    <img id="playBtn"src="../static/img/play.png"  width="20%" ng-click="stopPlay()">
+            </div>
+                <div class="modal fade" id="uploadModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" >
+                <div  class="playing_img">
+
+                    <div>
+
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span style="color:#70FF1A;font-size: 20px"  ng-click="close_dialog()">X</span>
+                        </button>
+                        <div >
+                        <img src="../static/img/play.png" style="width:20%;float: left;margin: 32.5% 39.5%"  ng-click="stopPlay()">
+                        </div>
+                          <div align="center" style="color: #ffcc00" id="show_task"></div>
+                    </div>
+
+                </div>
+
+            </div><!-- /.modal-dialog -->
+        </div>
+
+            </div>
+        <!-- /.content -->
+        {% endverbatim %}
+
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="../static/js/play.js"></script>
+{% endblock %}

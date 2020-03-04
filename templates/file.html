@@ -1,0 +1,130 @@
+{% extends 'public/base.html' %}
+{% block title %} 任务列表 {% endblock %}
+{% block style %}
+{% endblock %}
+
+{# 主体内容#}
+{% block content %}
+    <div class="content-wrapper" ng-controller="myCtrl">
+        {% verbatim %}
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <!-- 容器 DOM -->
+            <div class="row">
+                <div class="col-md-12">
+                     <a class="btn btn-primary btn-flat" ng-click="uploadmusic()">上传广播文件</a>
+                    <div class="noData" ng-if="!isShow">
+                        暂无记录
+                    </div>
+                    <div class="box" ng-if="isShow" style="background:white" ng-cloak>
+
+                        <table class="table table-bordered table-striped">
+
+                            <thead id="thead_h">
+
+                            <tr>
+
+                                <th style="width:4%">序号</th>
+                                <th style="width:16%">广播文件</th>
+                                <th  style="width:1%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="amsTbody">
+                            <tr ng-repeat="item in musers | orderBy : 'sort_num' ">
+
+                                <td align="center" ng-bind="$index+1"></td>
+                                <td>
+                                    <div align="center">{{ item.mp3 }}</div>
+                                </td>
+                                <td > <a class="btn btn-primary btn-flat" style="width: 100%;background-color: #81DDFF" ng-click="del_rev(this)">删除</a></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="uploadModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <div class="modal-title">
+                            上传文件
+                        </div>
+                    </div>
+                    <div class="modal-body" v-model="deleteId" style="display: block">
+
+                        <input type="file" id="uploadfile">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="savefile()">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="err_delModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+
+                    </div>
+                    <hr>
+                    <div class="modal-body"  align="center" style="flood-color: red" id="erro_div" ng-repeat=" item in error">该文件在<span style="color: red;font-size: 20px">{{ item }}</span>中已设置，请更改再重试</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">确认
+                        </button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="okModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" style="width: 20%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <div class="modal-title">
+                            是否删除
+                        </div>
+                    </div>
+                      <div class="modal-body" id="del_div" style=" text-align:center;display: block">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary btn-flat" ng-click="del_file()">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- /.content -->
+        {% endverbatim %}
+
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="../static/js/file.js"></script>
+{% endblock %}

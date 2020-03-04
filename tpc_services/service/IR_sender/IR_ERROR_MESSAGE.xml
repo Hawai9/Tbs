@@ -1,0 +1,54 @@
+<collection>
+<code>
+<key>0</key>
+<value>SUCCESS: OK!</value>
+</code>
+    <code>
+<key>1</key>
+<value>no</value>
+</code>
+<code>
+<key>101</key>
+<value>ERROR: Unable to load uuirtdrv,dll!</value>
+</code> 
+<code>
+<key>102</key>
+<value>ERROR: Unable to retrieve uuirtdrv version!</value>
+</code>
+<code>
+<key>103</key>
+<value>ERROR: Invalid uuirtdrv version!</value>
+</code>
+<code>
+<key>104</key>
+<value>ERROR: Unable to find USB-UIRT Driver. Please make sure driver is Installed!</value>
+</code>
+<code>
+<key>105</key>
+<value>ERROR: Your USB-UIRT's firmware is not compatible with this API DLL. Please verify you are running the latest API DLL and that you're using the latest version of USB-UIRT firmware!  If problem persists, contact Technical Support!</value>
+</code>
+<code>
+<key>201</key>
+<value>ERROR: Unable to connect to USB-UIRT device!  Please ensure device is connected to the computer!</value>
+</code>
+<code>
+<key>202</key>
+<value>ERROR: Unable to communicate with USB-UIRT device!  Please check connections and try again.  If you still have problems, try unplugging and reconnecting your USB-UIRT.  If problem persists, contact Technical Support!</value>
+</code>
+<code>
+<key>301</key>
+<value>ERROR Retrieving USB-UIRT Information!</value>
+</code>
+<code>
+<key>302</key>
+<value>ERROR Retrieving USB-UIRT Configuration Info!</value>
+</code>
+<code>
+<key>303</key>
+<value>ERROR calling UUIRTTransmitIR!</value>
+</code>
+<code>
+<key>401</key>
+<value>ERROR: Unable to initialize USB-UIRT (unknown error)!</value>
+</code>
+</collection>

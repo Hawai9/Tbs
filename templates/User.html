@@ -1,0 +1,211 @@
+{% extends 'public/base.html' %}
+{% block title %} 用户管理 {% endblock %}
+{% block style %}
+{% endblock %}
+
+{# 主体内容#}
+{% block content %}
+    <div class="content-wrapper" ng-controller="myCtrl">
+        {% verbatim %}
+        <!-- Main content -->
+
+        <section class="content" >
+            <!-- Small boxes (Stat box) -->
+            <!-- 容器 DOM -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="search-form">
+                        <form role="form" id="searchForm" method="post">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th width="10%">搜索用户：</th>
+                                    <td width="20%">
+                                        <input type="text"  id="quer_yuser"  ng-keyup ="q_user()" >
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-flat" ng-click="showAdd()">新增</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="noData" ng-if="!isShow">
+                        暂无记录
+                    </div>
+                    <div class="box" ng-if="isShow" style="background:white" ng-cloak>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width:8%">序号</th>
+                                <th style="width:15%">用户名</th>
+                                <th style="width:15%">权限</th>
+                                <th style="width:15%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in musers">
+                                <td align="center" ng-bind="$index+1"></td>
+                                <td align="center">{{ item.name }}</td>
+                                <td align="center"><a ng-click="checkAuth(this)">查看</a>  <a ng-click="setAuth(this)">设置</a></td>
+                                <td align="center">
+                                    <a  ng-click="showEdit(item.id,item.name,item.password,item.c_edite,item.c_user,this)"
+                                        class="btn bg-blue btn-flat btn-xs">编辑</a>
+                                    <a ng-click="showDelete(item.id,item.name)"
+                                       class="btn bg-red btn-flat btn-xs">删除</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+             <!-- 模态框编辑（Modal） -->
+        <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title" id="editTitle">
+
+                        </h4>
+                    </div>
+                    <div class="modal-body" id="editNum">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="form1" class="form-horizontal form" role="form" method="post">
+                                    <table class="table table-bordered table_sxcondition" >
+                                        <tbody >
+                                        <tr>
+                                            <th width="20%">*用户名：</th>
+                                            <td width="80%">
+                                                <input type="text" class="form-control" ng-model="name">
+                                            </td>
+                                        </tr>
+                                        <tr  >
+                                            <th width="20%" >*密码：</th>
+                                            <td width="80%" >
+                                                <input type="text" class="form-control" ng-model="password">
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="saveUser()">
+                            保存
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+           <!-- 模态框设置权限（Modal） -->
+        <div class="modal fade" id="setAuthModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" style="width: 30%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+
+                         <h4 align="center" class="modal-title" >
+                             <span style="font-size: 30px;color:darkcyan">{{ admin_name }} </span>权限
+                        </h4>
+                         <hr>
+                    </div>
+                    <div class="modal-body" id="editNum">
+                        <div class="row">
+                                <ul id="treeDemo" class="ztree"></ul>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary"  ng-click="saveAuth()" data-dismiss="modal">
+                            保存
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="checkAuthModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" style="width: 30%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+
+                         <h4 align="center" class="modal-title" >
+                             <span style="font-size: 30px;color:darkcyan">{{ admin_name }} </span>权限
+                        </h4>
+                         <hr>
+                    </div>
+                    <div class="modal-body" id="editNum">
+                        <div class="row">
+                                <ul id="checktreeDemo" class="ztree"></ul>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"  class="btn btn-primary"
+                                data-dismiss="modal">关闭
+                        </button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- 模态框删除（Modal） -->
+        <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog" style="width: 20%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <div class="modal-title">
+                            是否删除
+                        </div>
+                    </div>
+                    <div class="modal-body" id="showdelname_div" v-model="deleteId" style=" text-align:center;display: block">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="delete()">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        {% endverbatim %}
+        <!-- /.content -->
+    </div>
+{% endblock %}
+{% block script %}
+
+    <script src="../static/js/user.js"></script>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!document html>
+<head>
+	<style type="text/css">
+		.contanter:after {content:"";display:table;clear:both;} 
+  		.contanter {*zoom:1;}
+	
+		.left{
+			width: 200px;
+			height: 100px;
+			float: left;
+			background-color: red;
+
+		}
+		.center{
+			width: 200px;
+			height: 100px;
+		/*	float: left;*/
+			background-color:green;
+
+		}
+		.right{
+			width: 200px;
+			height: 100px;
+			/*float: right;*/
+			background-color: black; 
+
+		}
+		.bottom{
+			height: 100px;
+			width: 200px;
+			background: red;
+		}
+		  #triangle {
+    width: 0;
+    height: 0;
+    border-top: 40px solid transparent;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid greenyellow;
+  }
+	</style>
+	<body>
+		<div class="contanter">
+			<div class="left">我是左边</div>
+			<div class="center">我是中间</div>
+			<div class="right">我是右边</div>
+		<div style="clear: both;"></div>
+		</div>
+		<div class="bottom">我是底部</div>
+		<div id="triangle"><div>
+
+
+	</body>
+<!-- 	<script type="text/javascript">
+		window.onload=function(){
+					var n = 10000000;
+					// 准备待测数组
+					var arr = [];
+					for(var count=0;count<n;count++){
+					    arr[count] = 1;
+					}
+
+					// for 测试
+
+					console.time('for');
+var sum = 0;
+for (var i = 0; i < arr.length; i++) {
+    sum += arr[i];
+}
+console.timeEnd('for');
+
+
+// for loop缓存测试
+console.time('for cache');
+var sum = 0;
+var len = arr.length;
+for (var j = 0; j < len; j++) {
+    sum += arr[j];
+}
+console.timeEnd('for cache');
+
+
+	}
+
+	</script> -->
+</head>
+</html>

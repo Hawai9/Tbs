@@ -1,0 +1,108 @@
+{% extends 'public/base.html' %}
+{% block title %} 时程浏览 {% endblock %}
+{% block style %}
+<style>
+
+</style>
+{% endblock %}
+
+{# 主体内容#}
+{% block content %}
+    <div class="content-wrapper" ng-controller="myCtrl">
+        {% verbatim %}
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <!-- 容器 DOM -->
+            <div class="row">
+                <div class="col-md-12" >
+
+                    <div align="center" id="time_line" style="height: 600px;float: left"></div>
+                            <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title" id="editTitle">
+                        </h4>
+                    </div>
+                    <div class="modal-body" id="editNum">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="form1" class="form-horizontal form" role="form" method="post">
+                                    <table class="table table-bordered table_sxcondition">
+                                        <tbody>
+                                         <tr>
+                                            <th width="20%">任务名：</th>
+                                            <td width="80%">
+                                                 <input type="hidden" class="form-control" id="pointid">
+                                                <input type="text" class="form-control" id="name">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">任务时间：</th>
+                                            <td width="80%">
+                                                <input type='text' id="tasktime" class="form-control timepicker timepicker-default"  />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">音乐：</th>
+                                            <td width="80%">
+                                                <select  data-edit-select="1"  id="mp3file" onmousedown="if(this.options.length>3){this.size=8}" onblur="this.size=0" onchange="this.size=0"  style="position:absolute;z-index:1;"
+                                                         class="form-con" ng-options="mp3.mp3 for mp3 in mp3s" options=""  >
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <th width="20%">状态：</th>
+                                            <td width="80%">
+                                               <select class="form-control" id="state" >
+                                                   <option value="2">开启</option>
+                                                   <option value="1">暂停</option>
+
+                                               </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="saveEdite()">
+                            保存
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <!-- /.content -->
+        {% endverbatim %}
+
+    </div>
+
+{% endblock %}
+{% block script %}
+
+
+
+   <script src="../static/js/timehy.js"></script>
+{% endblock %}
